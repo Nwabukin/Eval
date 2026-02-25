@@ -58,17 +58,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -126,17 +126,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -194,17 +194,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -262,17 +262,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -330,17 +330,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -398,17 +398,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -466,17 +466,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -534,17 +534,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -602,17 +602,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -670,17 +670,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -738,17 +738,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -833,17 +833,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;
@@ -901,17 +901,17 @@ export declare class EvaluationsController {
             })[];
             employee: {
                 id: string;
-                departmentId: string | null;
                 email: string;
                 firstName: string;
                 lastName: string;
+                departmentId: string | null;
             };
         } & {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            cycleId: string;
             status: import("../../../generated/prisma/enums.js").EvaluationStatus;
+            cycleId: string;
             calibrationMode: import("../../../generated/prisma/enums.js").CalibrationMode | null;
             submittedAt: Date | null;
             managerSubmittedAt: Date | null;

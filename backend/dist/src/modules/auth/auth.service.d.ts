@@ -16,25 +16,25 @@ export declare class AuthService {
     login(dto: LoginDto): Promise<TokenPair>;
     refreshTokens(refreshToken: string): Promise<TokenPair>;
     getProfile(userId: string): Promise<{
-        level: {
-            id: string;
-            name: string;
-        } | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        department: {
-            id: string;
-            name: string;
-        } | null;
-        departmentId: string | null;
-        levelId: string | null;
         email: string;
         firstName: string;
         lastName: string;
         role: import("../../../generated/prisma/enums.js").UserRole;
         isActive: boolean;
+        departmentId: string | null;
+        levelId: string | null;
         lineManagerId: string | null;
+        level: {
+            id: string;
+            name: string;
+        } | null;
+        department: {
+            id: string;
+            name: string;
+        } | null;
         lineManager: {
             id: string;
             email: string;

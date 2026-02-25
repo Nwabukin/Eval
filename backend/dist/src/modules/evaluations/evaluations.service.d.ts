@@ -63,17 +63,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -128,17 +128,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -193,17 +193,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -258,17 +258,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -323,17 +323,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -388,17 +388,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -453,17 +453,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -518,17 +518,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -583,17 +583,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -648,17 +648,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -713,17 +713,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -802,17 +802,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;
@@ -867,17 +867,17 @@ export declare class EvaluationsService {
         })[];
         employee: {
             id: string;
-            departmentId: string | null;
             email: string;
             firstName: string;
             lastName: string;
+            departmentId: string | null;
         };
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        cycleId: string;
         status: EvaluationStatus;
+        cycleId: string;
         calibrationMode: CalibrationMode | null;
         submittedAt: Date | null;
         managerSubmittedAt: Date | null;

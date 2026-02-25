@@ -15,25 +15,25 @@ export declare class UsersService {
         }[];
     }>;
     create(dto: CreateUserDto): Promise<{
-        level: {
-            id: string;
-            name: string;
-        } | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        department: {
-            id: string;
-            name: string;
-        } | null;
-        departmentId: string | null;
-        levelId: string | null;
         email: string;
         firstName: string;
         lastName: string;
         role: UserRole;
         isActive: boolean;
+        departmentId: string | null;
+        levelId: string | null;
         lineManagerId: string | null;
+        level: {
+            id: string;
+            name: string;
+        } | null;
+        department: {
+            id: string;
+            name: string;
+        } | null;
         lineManager: {
             id: string;
             email: string;
@@ -46,25 +46,25 @@ export declare class UsersService {
         meta: PaginationMeta;
     }>;
     findOne(id: string): Promise<{
-        level: {
-            id: string;
-            name: string;
-        } | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        department: {
-            id: string;
-            name: string;
-        } | null;
-        departmentId: string | null;
-        levelId: string | null;
         email: string;
         firstName: string;
         lastName: string;
         role: UserRole;
         isActive: boolean;
+        departmentId: string | null;
+        levelId: string | null;
         lineManagerId: string | null;
+        level: {
+            id: string;
+            name: string;
+        } | null;
+        department: {
+            id: string;
+            name: string;
+        } | null;
         lineManager: {
             id: string;
             email: string;
@@ -73,25 +73,25 @@ export declare class UsersService {
         } | null;
     }>;
     update(id: string, dto: UpdateUserDto): Promise<{
-        level: {
-            id: string;
-            name: string;
-        } | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        department: {
-            id: string;
-            name: string;
-        } | null;
-        departmentId: string | null;
-        levelId: string | null;
         email: string;
         firstName: string;
         lastName: string;
         role: UserRole;
         isActive: boolean;
+        departmentId: string | null;
+        levelId: string | null;
         lineManagerId: string | null;
+        level: {
+            id: string;
+            name: string;
+        } | null;
+        department: {
+            id: string;
+            name: string;
+        } | null;
         lineManager: {
             id: string;
             email: string;
@@ -101,25 +101,25 @@ export declare class UsersService {
     }>;
     remove(id: string): Promise<void>;
     assign(id: string, dto: AssignUserDto): Promise<{
-        level: {
-            id: string;
-            name: string;
-        } | null;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        department: {
-            id: string;
-            name: string;
-        } | null;
-        departmentId: string | null;
-        levelId: string | null;
         email: string;
         firstName: string;
         lastName: string;
         role: UserRole;
         isActive: boolean;
+        departmentId: string | null;
+        levelId: string | null;
         lineManagerId: string | null;
+        level: {
+            id: string;
+            name: string;
+        } | null;
+        department: {
+            id: string;
+            name: string;
+        } | null;
         lineManager: {
             id: string;
             email: string;

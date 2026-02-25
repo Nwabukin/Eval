@@ -23,15 +23,15 @@ export declare class EvaluationSheetsController {
         } & {
             id: string;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            departmentId: string;
+            levelId: string;
+            cycleId: string;
             weight: number;
             minScore: number;
             maxScore: number;
             sortOrder: number;
-            createdAt: Date;
-            updatedAt: Date;
-            cycleId: string;
-            departmentId: string;
-            levelId: string;
         };
         message: string;
     }>;
@@ -55,15 +55,15 @@ export declare class EvaluationSheetsController {
         } & {
             id: string;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            departmentId: string;
+            levelId: string;
+            cycleId: string;
             weight: number;
             minScore: number;
             maxScore: number;
             sortOrder: number;
-            createdAt: Date;
-            updatedAt: Date;
-            cycleId: string;
-            departmentId: string;
-            levelId: string;
         })[];
         message: string;
     }>;
@@ -87,15 +87,15 @@ export declare class EvaluationSheetsController {
         } & {
             id: string;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            departmentId: string;
+            levelId: string;
+            cycleId: string;
             weight: number;
             minScore: number;
             maxScore: number;
             sortOrder: number;
-            createdAt: Date;
-            updatedAt: Date;
-            cycleId: string;
-            departmentId: string;
-            levelId: string;
         })[];
         message: string;
     }>;
@@ -115,10 +115,10 @@ export declare class EvaluationSheetsController {
             };
             questions: {
                 id: string;
-                weight: number;
-                sortOrder: number;
                 createdAt: Date;
                 updatedAt: Date;
+                weight: number;
+                sortOrder: number;
                 text: string;
                 category: string | null;
                 sheetId: string;
@@ -129,15 +129,15 @@ export declare class EvaluationSheetsController {
         } & {
             id: string;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            departmentId: string;
+            levelId: string;
+            cycleId: string;
             weight: number;
             minScore: number;
             maxScore: number;
             sortOrder: number;
-            createdAt: Date;
-            updatedAt: Date;
-            cycleId: string;
-            departmentId: string;
-            levelId: string;
         };
         message: string;
     }>;
@@ -161,15 +161,15 @@ export declare class EvaluationSheetsController {
         } & {
             id: string;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            departmentId: string;
+            levelId: string;
+            cycleId: string;
             weight: number;
             minScore: number;
             maxScore: number;
             sortOrder: number;
-            createdAt: Date;
-            updatedAt: Date;
-            cycleId: string;
-            departmentId: string;
-            levelId: string;
         };
         message: string;
     }>;

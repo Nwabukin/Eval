@@ -22,15 +22,15 @@ export declare class EvaluationSheetsService {
     } & {
         id: string;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        departmentId: string;
+        levelId: string;
+        cycleId: string;
         weight: number;
         minScore: number;
         maxScore: number;
         sortOrder: number;
-        createdAt: Date;
-        updatedAt: Date;
-        cycleId: string;
-        departmentId: string;
-        levelId: string;
     })[]>;
     create(dto: CreateSheetDto): Promise<{
         level: {
@@ -51,15 +51,15 @@ export declare class EvaluationSheetsService {
     } & {
         id: string;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        departmentId: string;
+        levelId: string;
+        cycleId: string;
         weight: number;
         minScore: number;
         maxScore: number;
         sortOrder: number;
-        createdAt: Date;
-        updatedAt: Date;
-        cycleId: string;
-        departmentId: string;
-        levelId: string;
     }>;
     findAll(query: QuerySheetsDto): Promise<({
         level: {
@@ -80,15 +80,15 @@ export declare class EvaluationSheetsService {
     } & {
         id: string;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        departmentId: string;
+        levelId: string;
+        cycleId: string;
         weight: number;
         minScore: number;
         maxScore: number;
         sortOrder: number;
-        createdAt: Date;
-        updatedAt: Date;
-        cycleId: string;
-        departmentId: string;
-        levelId: string;
     })[]>;
     findOne(id: string): Promise<{
         level: {
@@ -105,10 +105,10 @@ export declare class EvaluationSheetsService {
         };
         questions: {
             id: string;
-            weight: number;
-            sortOrder: number;
             createdAt: Date;
             updatedAt: Date;
+            weight: number;
+            sortOrder: number;
             text: string;
             category: string | null;
             sheetId: string;
@@ -119,15 +119,15 @@ export declare class EvaluationSheetsService {
     } & {
         id: string;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        departmentId: string;
+        levelId: string;
+        cycleId: string;
         weight: number;
         minScore: number;
         maxScore: number;
         sortOrder: number;
-        createdAt: Date;
-        updatedAt: Date;
-        cycleId: string;
-        departmentId: string;
-        levelId: string;
     }>;
     update(id: string, dto: UpdateSheetDto): Promise<{
         level: {
@@ -148,15 +148,15 @@ export declare class EvaluationSheetsService {
     } & {
         id: string;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        departmentId: string;
+        levelId: string;
+        cycleId: string;
         weight: number;
         minScore: number;
         maxScore: number;
         sortOrder: number;
-        createdAt: Date;
-        updatedAt: Date;
-        cycleId: string;
-        departmentId: string;
-        levelId: string;
     }>;
     remove(id: string): Promise<void>;
     private validateScoreRange;

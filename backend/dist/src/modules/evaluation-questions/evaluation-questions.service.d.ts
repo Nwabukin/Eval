@@ -5,14 +5,14 @@ export declare class EvaluationQuestionsService {
     constructor(prisma: PrismaService);
     bulkCreate(dto: BulkCreateQuestionsDto): Promise<({
         sheet: {
-            level: {
-                id: string;
-                name: string;
-            };
             id: string;
             name: string;
             minScore: number;
             maxScore: number;
+            level: {
+                id: string;
+                name: string;
+            };
             cycle: {
                 id: string;
                 name: string;
@@ -24,24 +24,24 @@ export declare class EvaluationQuestionsService {
         };
     } & {
         id: string;
-        weight: number;
-        sortOrder: number;
         createdAt: Date;
         updatedAt: Date;
+        weight: number;
+        sortOrder: number;
         text: string;
         category: string | null;
         sheetId: string;
     })[]>;
     create(dto: CreateQuestionDto): Promise<{
         sheet: {
-            level: {
-                id: string;
-                name: string;
-            };
             id: string;
             name: string;
             minScore: number;
             maxScore: number;
+            level: {
+                id: string;
+                name: string;
+            };
             cycle: {
                 id: string;
                 name: string;
@@ -53,24 +53,24 @@ export declare class EvaluationQuestionsService {
         };
     } & {
         id: string;
-        weight: number;
-        sortOrder: number;
         createdAt: Date;
         updatedAt: Date;
+        weight: number;
+        sortOrder: number;
         text: string;
         category: string | null;
         sheetId: string;
     }>;
     findAll(query: QueryQuestionsDto): Promise<({
         sheet: {
-            level: {
-                id: string;
-                name: string;
-            };
             id: string;
             name: string;
             minScore: number;
             maxScore: number;
+            level: {
+                id: string;
+                name: string;
+            };
             cycle: {
                 id: string;
                 name: string;
@@ -82,24 +82,24 @@ export declare class EvaluationQuestionsService {
         };
     } & {
         id: string;
-        weight: number;
-        sortOrder: number;
         createdAt: Date;
         updatedAt: Date;
+        weight: number;
+        sortOrder: number;
         text: string;
         category: string | null;
         sheetId: string;
     })[]>;
     findOne(id: string): Promise<{
         sheet: {
-            level: {
-                id: string;
-                name: string;
-            };
             id: string;
             name: string;
             minScore: number;
             maxScore: number;
+            level: {
+                id: string;
+                name: string;
+            };
             cycle: {
                 id: string;
                 name: string;
@@ -111,24 +111,24 @@ export declare class EvaluationQuestionsService {
         };
     } & {
         id: string;
-        weight: number;
-        sortOrder: number;
         createdAt: Date;
         updatedAt: Date;
+        weight: number;
+        sortOrder: number;
         text: string;
         category: string | null;
         sheetId: string;
     }>;
     update(id: string, dto: UpdateQuestionDto): Promise<{
         sheet: {
-            level: {
-                id: string;
-                name: string;
-            };
             id: string;
             name: string;
             minScore: number;
             maxScore: number;
+            level: {
+                id: string;
+                name: string;
+            };
             cycle: {
                 id: string;
                 name: string;
@@ -140,10 +140,10 @@ export declare class EvaluationQuestionsService {
         };
     } & {
         id: string;
-        weight: number;
-        sortOrder: number;
         createdAt: Date;
         updatedAt: Date;
+        weight: number;
+        sortOrder: number;
         text: string;
         category: string | null;
         sheetId: string;

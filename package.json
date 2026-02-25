@@ -1,0 +1,10 @@
+{
+  "name": "eval-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend",
+    "shared"
+  ]
+}

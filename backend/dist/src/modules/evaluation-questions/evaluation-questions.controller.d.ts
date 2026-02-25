@@ -6,14 +6,14 @@ export declare class EvaluationQuestionsController {
     create(dto: CreateQuestionDto): Promise<{
         data: {
             sheet: {
-                level: {
-                    id: string;
-                    name: string;
-                };
                 id: string;
                 name: string;
                 minScore: number;
                 maxScore: number;
+                level: {
+                    id: string;
+                    name: string;
+                };
                 cycle: {
                     id: string;
                     name: string;
@@ -25,10 +25,10 @@ export declare class EvaluationQuestionsController {
             };
         } & {
             id: string;
-            weight: number;
-            sortOrder: number;
             createdAt: Date;
             updatedAt: Date;
+            weight: number;
+            sortOrder: number;
             text: string;
             category: string | null;
             sheetId: string;
@@ -38,14 +38,14 @@ export declare class EvaluationQuestionsController {
     bulkCreate(dto: BulkCreateQuestionsDto): Promise<{
         data: ({
             sheet: {
-                level: {
-                    id: string;
-                    name: string;
-                };
                 id: string;
                 name: string;
                 minScore: number;
                 maxScore: number;
+                level: {
+                    id: string;
+                    name: string;
+                };
                 cycle: {
                     id: string;
                     name: string;
@@ -57,10 +57,10 @@ export declare class EvaluationQuestionsController {
             };
         } & {
             id: string;
-            weight: number;
-            sortOrder: number;
             createdAt: Date;
             updatedAt: Date;
+            weight: number;
+            sortOrder: number;
             text: string;
             category: string | null;
             sheetId: string;
@@ -70,14 +70,14 @@ export declare class EvaluationQuestionsController {
     findAll(query: QueryQuestionsDto): Promise<{
         data: ({
             sheet: {
-                level: {
-                    id: string;
-                    name: string;
-                };
                 id: string;
                 name: string;
                 minScore: number;
                 maxScore: number;
+                level: {
+                    id: string;
+                    name: string;
+                };
                 cycle: {
                     id: string;
                     name: string;
@@ -89,10 +89,10 @@ export declare class EvaluationQuestionsController {
             };
         } & {
             id: string;
-            weight: number;
-            sortOrder: number;
             createdAt: Date;
             updatedAt: Date;
+            weight: number;
+            sortOrder: number;
             text: string;
             category: string | null;
             sheetId: string;
@@ -102,14 +102,14 @@ export declare class EvaluationQuestionsController {
     findOne(id: string): Promise<{
         data: {
             sheet: {
-                level: {
-                    id: string;
-                    name: string;
-                };
                 id: string;
                 name: string;
                 minScore: number;
                 maxScore: number;
+                level: {
+                    id: string;
+                    name: string;
+                };
                 cycle: {
                     id: string;
                     name: string;
@@ -121,10 +121,10 @@ export declare class EvaluationQuestionsController {
             };
         } & {
             id: string;
-            weight: number;
-            sortOrder: number;
             createdAt: Date;
             updatedAt: Date;
+            weight: number;
+            sortOrder: number;
             text: string;
             category: string | null;
             sheetId: string;
@@ -134,14 +134,14 @@ export declare class EvaluationQuestionsController {
     update(id: string, dto: UpdateQuestionDto): Promise<{
         data: {
             sheet: {
-                level: {
-                    id: string;
-                    name: string;
-                };
                 id: string;
                 name: string;
                 minScore: number;
                 maxScore: number;
+                level: {
+                    id: string;
+                    name: string;
+                };
                 cycle: {
                     id: string;
                     name: string;
@@ -153,10 +153,10 @@ export declare class EvaluationQuestionsController {
             };
         } & {
             id: string;
-            weight: number;
-            sortOrder: number;
             createdAt: Date;
             updatedAt: Date;
+            weight: number;
+            sortOrder: number;
             text: string;
             category: string | null;
             sheetId: string;

@@ -1,0 +1,50 @@
+# Node & package managers
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist
+build
+coverage
+
+# Frontend (Next.js)
+.next
+.vercel
+out
+
+# Backend (NestJS)
+backend/dist
+backend/coverage
+
+# Frontend workspace
+frontend/.next
+frontend/out
+frontend/coverage
+
+# Shared
+shared/dist
+
+# Prisma
+backend/prisma/*.db
+backend/prisma/migrations/
+
+# IDE / Editor
+.idea
+.vscode
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
