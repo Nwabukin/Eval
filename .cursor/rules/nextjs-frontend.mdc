@@ -1,0 +1,68 @@
+---
+description: Next.js App Router patterns, component architecture, data fetching, and frontend conventions
+globs: "frontend/**/*.ts,frontend/**/*.tsx"
+alwaysApply: false
+---
+
+# Next.js Frontend Standards
+
+## App Router
+
+- Use the App Router (`app/` directory) — no Pages Router
+- Layouts for shared chrome (sidebar, nav); pages for route content
+- Route groups `(auth)`, `(dashboard)` to organize without affecting URL structure
+- Loading states via `loading.tsx`; error boundaries via `error.tsx`
+- Metadata via `generateMetadata` or static `metadata` export per page
+
+## Components
+
+- **Server Components by default** — only add `'use client'` when the component needs browser APIs, hooks, or event handlers
+- Push `'use client'` to the smallest leaf component possible
+- Atomic design hierarchy: `ui/` (primitives) → `domain/` (business) → pages (composition)
+- One component per file; co-locate related sub-components in the same directory
+- Props defined as explicit interfaces — `interface EvalFormProps { ... }`
+
+```typescript
+// Server Component (default)
+export default async function EvaluationPage({ params }: { params: { id: string } }) {
+  const evaluation = await getEvaluation(params.id);
+  return <EvaluationDetail data={evaluation} />;
+}
+
+// Client Component (only when needed)
+'use client';
+interface ScoreInputProps {
+  readonly questionId: string;
+  readonly maxScore: number;
+  readonly onChange: (score: number) => void;
+}
+export function ScoreInput({ questionId, maxScore, onChange }: ScoreInputProps) { ... }
+```
+
+## Data Fetching
+
+- Fetch data in Server Components or Route Handlers — not in client components
+- API calls go through service functions in `services/` — never call `fetch()` directly in components
+- Use React `cache()` or Next.js `unstable_cache` for deduplication where appropriate
+- Handle loading/error states at the route level (`loading.tsx`, `error.tsx`)
+
+## State Management
+
+- Server state via server components + revalidation (`revalidatePath`, `revalidateTag`)
+- Client state: React `useState`/`useReducer` for local UI state
+- Form state: use `useActionState` or a form library; avoid manual controlled-input sprawl
+- Avoid global client state stores unless genuinely needed (auth context is fine)
+
+## Styling
+
+- Tailwind CSS as the primary styling system — utility-first
+- Design tokens via CSS custom properties or Tailwind theme extension
+- No inline style objects unless dynamic values require it
+- Responsive-first: mobile → tablet → desktop breakpoints
+
+## Performance
+
+- Use `next/image` for all images — never raw `<img>`
+- Use `next/link` for all internal navigation — never raw `<a>` for internal routes
+- Dynamic imports (`next/dynamic`) for heavy client components
+- Minimize client bundle: keep `'use client'` boundaries tight

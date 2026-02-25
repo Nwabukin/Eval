@@ -1,0 +1,26 @@
+export const UserRole = {
+    ADMIN: "ADMIN",
+    EMPLOYEE: "EMPLOYEE",
+    LINE_MANAGER: "LINE_MANAGER",
+    CALIBRATION: "CALIBRATION",
+};
+export const CycleStatus = {
+    OPEN: "OPEN",
+    CLOSED: "CLOSED",
+};
+export const EvaluationStatus = {
+    DRAFT: "DRAFT",
+    SUBMITTED_TO_MANAGER: "SUBMITTED_TO_MANAGER",
+    SUBMITTED_TO_CALIBRATION: "SUBMITTED_TO_CALIBRATION",
+    FINALIZED: "FINALIZED",
+};
+export const CalibrationMode = {
+    INDIVIDUAL_AGGREGATE: "INDIVIDUAL_AGGREGATE",
+    DIRECT_TEAM: "DIRECT_TEAM",
+};
+export class PrismaClient {
+    $connect = jest.fn();
+    $disconnect = jest.fn();
+    $transaction = jest.fn();
+}
+//# sourceMappingURL=generated-prisma-client.js.map

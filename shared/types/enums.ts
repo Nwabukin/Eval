@@ -1,0 +1,28 @@
+/**
+ * Mirrors Prisma enums for use by the frontend and any other consumer
+ * that doesn't have access to the generated Prisma client.
+ */
+
+export enum UserRole {
+  ADMIN = "ADMIN",
+  EMPLOYEE = "EMPLOYEE",
+  LINE_MANAGER = "LINE_MANAGER",
+  CALIBRATION = "CALIBRATION",
+}
+
+export enum CycleStatus {
+  OPEN = "OPEN",
+  CLOSED = "CLOSED",
+}
+
+export enum EvaluationStatus {
+  DRAFT = "DRAFT",
+  SUBMITTED_TO_MANAGER = "SUBMITTED_TO_MANAGER",
+  SUBMITTED_TO_CALIBRATION = "SUBMITTED_TO_CALIBRATION",
+  FINALIZED = "FINALIZED",
+}
+
+export enum CalibrationMode {
+  INDIVIDUAL_AGGREGATE = "INDIVIDUAL_AGGREGATE",
+  DIRECT_TEAM = "DIRECT_TEAM",
+}

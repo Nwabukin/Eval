@@ -1,0 +1,68 @@
+---
+description: NestJS serverless backend patterns — modules, controllers, services, DTOs, dependency injection
+globs: "backend/**/*.ts"
+alwaysApply: false
+---
+
+# NestJS Backend Standards
+
+## Module Architecture
+
+- One module per bounded domain: `AuthModule`, `UsersModule`, `EvaluationsModule`, `NotificationsModule`
+- Register all modules in `AppModule` — never import a service directly across module boundaries
+- Use `forwardRef()` only as a last resort; prefer extracting shared logic to a dedicated module
+
+## Controllers
+
+- Thin controllers — validate input, delegate to service, return response
+- One controller per resource; group related endpoints logically
+- Always use decorators: `@ApiTags`, `@ApiBearerAuth`, `@ApiOperation`, `@ApiResponse`
+- Apply guards at controller or method level: `@UseGuards(JwtAuthGuard, RolesGuard)`
+
+```typescript
+@Controller('evaluations')
+@ApiTags('Evaluations')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard, RolesGuard)
+export class EvaluationsController {
+  constructor(private readonly evaluationsService: EvaluationsService) {}
+
+  @Post()
+  @Roles(UserRole.EMPLOYEE)
+  @ApiOperation({ summary: 'Submit self-evaluation' })
+  @ApiResponse({ status: 201, type: EvaluationResponseDto })
+  async submitSelfEvaluation(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() dto: CreateSelfEvaluationDto,
+  ): Promise<ApiResponse<EvaluationResponseDto>> {
+    return this.evaluationsService.submitSelf(user.id, dto);
+  }
+}
+```
+
+## Services
+
+- All business logic lives in services — controllers never contain logic
+- Services are injectable singletons by default; keep them stateless
+- Throw domain-specific exceptions (`NotFoundException`, `ForbiddenException`) — never raw `Error`
+- Use transactions for multi-step writes
+
+## DTOs & Validation
+
+- One DTO per operation: `CreateUserDto`, `UpdateEvaluationDto`, `EvaluationResponseDto`
+- Use `class-validator` decorators on every field — `@IsString()`, `@IsEnum()`, `@Min()`, `@Max()`
+- Use `class-transformer` for serialization — `@Exclude()`, `@Expose()`, `@Type()`
+- DTOs live in `dto/` subdirectory of their module
+- Response DTOs are separate from request DTOs
+
+## Configuration
+
+- Use `@nestjs/config` with `.env` files and Joi/Zod validation schemas
+- Never import `process.env` directly — inject `ConfigService`
+- Group config by concern: `database.config.ts`, `auth.config.ts`, `mail.config.ts`
+
+## Serverless
+
+- Entry point must be adapted for serverless handler (AWS Lambda / Vercel / etc.)
+- Keep cold-start weight low — lazy-load heavy modules where possible
+- Avoid file-system writes at runtime; use external storage (S3, DB)

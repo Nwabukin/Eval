@@ -1,0 +1,76 @@
+---
+description: JSDoc, Swagger/OpenAPI, commenting philosophy, and API documentation standards
+alwaysApply: true
+---
+
+# Documentation & Commenting Standards
+
+## Commenting Philosophy
+
+- **Comment WHY, never WHAT** — the code shows what, comments explain intent and trade-offs
+- **No noise comments** — never `// increment counter`, `// return result`, `// constructor`
+- **Complex logic gets a comment** — algorithms, business rules, workarounds, edge cases
+- **TODO format**: `// TODO(author): description — TICKET-123` — must reference a ticket or get resolved before merge
+
+## JSDoc Requirements
+
+### Backend (NestJS)
+
+Every exported class, method, interface, and DTO field must have JSDoc:
+
+```typescript
+/**
+ * Submits an employee's self-evaluation for a given cycle.
+ * Locks the evaluation and transitions status to SUBMITTED_TO_MANAGER.
+ *
+ * @param userId - The authenticated employee's ID
+ * @param dto - Self-evaluation scores and remarks
+ * @returns The updated evaluation with new status
+ * @throws {NotFoundException} If no active evaluation cycle exists
+ * @throws {ConflictException} If already submitted for this cycle
+ */
+async submitSelf(userId: string, dto: CreateSelfEvaluationDto): Promise<ApiResponse<EvaluationResponseDto>> { ... }
+```
+
+### Frontend (Next.js)
+
+JSDoc on all exported components, hooks, and utility functions:
+
+```typescript
+/**
+ * Renders the multi-question evaluation form for a given cycle.
+ * Handles score validation (1-5 range) and autosave on blur.
+ */
+export function EvaluationForm({ cycleId, questions }: EvaluationFormProps): JSX.Element { ... }
+```
+
+### DTOs & Entities
+
+Every field on a DTO or entity must have `@ApiProperty` with `description` and `example`:
+
+```typescript
+export class CreateSelfEvaluationDto {
+  @ApiProperty({ description: 'ID of the evaluation question', example: 'q-uuid-123' })
+  @IsUUID()
+  readonly questionId: string;
+
+  @ApiProperty({ description: 'Self-assessed score (1-5)', example: 4, minimum: 1, maximum: 5 })
+  @IsInt()
+  @Min(1)
+  @Max(5)
+  readonly score: number;
+}
+```
+
+## Swagger / OpenAPI Documentation
+
+- Swagger UI at `/api/docs` (disabled in production)
+- Every endpoint: `@ApiOperation({ summary })`, `@ApiResponse({ status, description, type })`
+- Group endpoints with `@ApiTags` matching the module name
+- Include request/response examples in DTO `@ApiProperty` decorators
+
+## README & Module Docs
+
+- Root `README.md`: setup instructions, environment variables, scripts, architecture overview
+- Each backend module: brief comment block at top of `<module>.module.ts` explaining the domain scope
+- Each frontend route group: brief comment in the layout file explaining the section's purpose

@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+  LINE_MANAGER
+  CALIBRATION
+}
+
+enum CycleStatus {
+  OPEN
+  CLOSED
+}
+
+enum EvaluationStatus {
+  DRAFT
+  SUBMITTED_TO_MANAGER
+  SUBMITTED_TO_CALIBRATION
+  FINALIZED
+}
+
+enum CalibrationMode {
+  INDIVIDUAL_AGGREGATE
+  DIRECT_TEAM
+}
+
+// ─── Models ──────────────────────────────────────────────
+
+model Department {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users  User[]
+  sheets EvaluationSheet[]
+
+  @@map("departments")
+}
+
+model Level {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users  User[]
+  sheets EvaluationSheet[]
+
+  @@map("levels")
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  departmentId  String?  @db.Uuid
+  department    Department? @relation(fields: [departmentId], references: [id])
+
+  levelId       String?  @db.Uuid
+  level         Level?   @relation(fields: [levelId], references: [id])
+
+  lineManagerId String?  @db.Uuid
+  lineManager   User?    @relation("LineManagerRelation", fields: [lineManagerId], references: [id])
+  managedEmployees User[] @relation("LineManagerRelation")
+
+  evaluationsAsEmployee Evaluation[] @relation("EmployeeEvaluation")
+
+  cycleCalibrationMemberships CycleCalibrationMember[]
+  calibrationIndividualScores CalibrationIndividualScore[]
+
+  @@index([role])
+  @@index([departmentId])
+  @@index([lineManagerId])
+  @@map("users")
+}
+
+model EvaluationCycle {
+  id        String      @id @default(uuid()) @db.Uuid
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  status    CycleStatus @default(OPEN)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  evaluations        Evaluation[]
+  sheets             EvaluationSheet[]
+  calibrationMembers CycleCalibrationMember[]
+
+  @@map("evaluation_cycles")
+}
+
+/// Links calibration-role users to a specific evaluation cycle.
+model CycleCalibrationMember {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+
+  cycleId String          @db.Uuid
+  cycle   EvaluationCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([cycleId, userId])
+  @@map("cycle_calibration_members")
+}
+
+/// A section/tab of the evaluation form (e.g. "GENERAL", "SUCCESS FACTORS").
+/// Scoped to a specific cycle + department + level combination.
+/// Employees see all sheets matching their department and level.
+model EvaluationSheet {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  weight    Int      @default(100)
+  minScore  Int      @default(1)
+  maxScore  Int      @default(10)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cycleId String          @db.Uuid
+  cycle   EvaluationCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  departmentId String     @db.Uuid
+  department   Department @relation(fields: [departmentId], references: [id])
+
+  levelId String @db.Uuid
+  level   Level  @relation(fields: [levelId], references: [id])
+
+  questions EvaluationQuestion[]
+
+  @@index([cycleId, departmentId, levelId])
+  @@map("evaluation_sheets")
+}
+
+model EvaluationQuestion {
+  id        String   @id @default(uuid()) @db.Uuid
+  text      String
+  category  String?
+  weight    Int      @default(10)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sheetId String          @db.Uuid
+  sheet   EvaluationSheet @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+
+  answers EvaluationAnswer[]
+
+  @@index([sheetId])
+  @@map("evaluation_questions")
+}
+
+model Evaluation {
+  id               String           @id @default(uuid()) @db.Uuid
+  status           EvaluationStatus @default(DRAFT)
+  calibrationMode  CalibrationMode?
+  submittedAt      DateTime?
+  managerSubmittedAt DateTime?
+  finalizedAt      DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  employeeId String @db.Uuid
+  employee   User   @relation("EmployeeEvaluation", fields: [employeeId], references: [id])
+
+  cycleId String          @db.Uuid
+  cycle   EvaluationCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  answers EvaluationAnswer[]
+
+  @@unique([employeeId, cycleId])
+  @@index([status])
+  @@index([cycleId])
+  @@map("evaluations")
+}
+
+model EvaluationAnswer {
+  id             String  @id @default(uuid()) @db.Uuid
+  selfScore      Int?
+  selfRemarks    String?
+  managerScore   Int?
+  managerRemarks String?
+  finalScore     Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  evaluationId String     @db.Uuid
+  evaluation   Evaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+
+  questionId String             @db.Uuid
+  question   EvaluationQuestion @relation(fields: [questionId], references: [id])
+
+  calibrationIndividualScores CalibrationIndividualScore[]
+
+  @@unique([evaluationId, questionId])
+  @@map("evaluation_answers")
+}
+
+/// Blacklisted refresh tokens — checked during token refresh to prevent reuse after logout.
+model RevokedToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  token     String   @unique
+  userId    String   @db.Uuid
+  expiresAt DateTime
+  revokedAt DateTime @default(now())
+
+  @@index([expiresAt])
+  @@map("revoked_tokens")
+}
+
+/// Stores each calibration member's individual score for an answer.
+/// Used when Evaluation.calibrationMode is INDIVIDUAL_AGGREGATE.
+model CalibrationIndividualScore {
+  id       String   @id @default(uuid()) @db.Uuid
+  score    Int
+  scoredAt DateTime @default(now())
+
+  answerId String           @db.Uuid
+  answer   EvaluationAnswer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+
+  calibratorId String @db.Uuid
+  calibrator   User   @relation(fields: [calibratorId], references: [id])
+
+  @@unique([answerId, calibratorId])
+  @@map("calibration_individual_scores")
+}

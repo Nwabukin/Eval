@@ -1,0 +1,52 @@
+---
+description: Guidelines for using available Cursor tools, MCP servers, and development workflow during this project
+alwaysApply: true
+---
+
+# Tool Usage & Development Workflow
+
+## Version & Documentation Lookup
+
+- **Before installing ANY package**: use `WebSearch` to confirm the latest LTS/stable version — never assume versions
+- **For framework API usage**: use Context7 MCP (`resolve-library-id` → `query-docs`) to get up-to-date NestJS, Next.js, and library documentation before writing code
+- **Runtime**: target Node.js LTS (currently 22.x); confirm with WebSearch if uncertain
+
+## Code Quality Gates
+
+- **After every substantive edit**: run `ReadLints` on the modified files — fix introduced errors immediately
+- **After creating/modifying a module**: run the TypeScript compiler check via Shell (`npx tsc --noEmit`)
+- **After writing tests**: run them via Shell (`npm test -- --filter <module>`) and verify pass before moving on
+
+## Search & Exploration
+
+- **Finding code by meaning** (how does auth work?): use `SemanticSearch`
+- **Finding exact symbols/strings** (where is `EvaluationStatus` defined?): use `Grep`
+- **Finding files by name pattern**: use `Glob`
+- **Broad codebase exploration**: use `Task` subagent with `explore` type
+- Never use Shell for `cat`, `grep`, `find`, `head`, `tail` — always use the dedicated tools
+
+## Browser & Frontend Testing
+
+- Use the browser MCP tools (`browser_navigate` → `browser_lock` → interact → `browser_unlock`) to verify UI changes
+- Take snapshots with `browser_snapshot` before interacting with elements
+- For longer test flows, use the `browser-use` subagent
+
+## Git & Commits
+
+- Commit working code frequently in small, focused chunks
+- Format: `<type>: <description>` — types: `feat`, `fix`, `refactor`, `docs`, `chore`
+- Each commit must build and pass linting — never commit broken code
+- Always verify with `git status` and `git diff` before committing
+
+## Task Management
+
+- Use `TodoWrite` for any task with 3+ steps to track progress
+- Mark tasks `in_progress` → `completed` as you work — only one in-progress at a time
+- Break large features into module-level subtasks
+
+## File Operations
+
+- **Read**: use `Read` tool — never `cat` or `head`
+- **Edit**: use `StrReplace` — never `sed` or `awk`
+- **Create**: use `Write` — never `echo >` or heredoc
+- **Delete**: use `Delete` tool

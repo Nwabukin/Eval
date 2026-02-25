@@ -1,0 +1,54 @@
+---
+description: Security standards — authentication, RBAC, input validation, encryption, headers, and data protection
+alwaysApply: true
+---
+
+# Security Standards
+
+## Authentication
+
+- JWT-based auth with short-lived access tokens and refresh token rotation
+- Passwords hashed with bcrypt (minimum 12 salt rounds)
+- Never store plain-text passwords, tokens, or secrets in code or logs
+- Auth tokens transmitted only in `Authorization: Bearer <token>` header — never in URLs or cookies without `HttpOnly; Secure; SameSite=Strict`
+
+## Role-Based Access Control (RBAC)
+
+- Four roles: `ADMIN`, `EMPLOYEE`, `LINE_MANAGER`, `CALIBRATION`
+- Enforce at the guard level using a custom `@Roles()` decorator + `RolesGuard`
+- Every endpoint must explicitly declare required roles — default-deny
+- Service layer must re-verify ownership/scope (e.g., manager can only see their department's evaluations)
+
+```typescript
+@Roles(UserRole.LINE_MANAGER)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Get('pending')
+async getPendingEvaluations(@CurrentUser() user: AuthenticatedUser) { ... }
+```
+
+## Input Validation
+
+- Validate ALL incoming data with `class-validator` on DTOs — global `ValidationPipe` enabled
+- Sanitize string inputs to prevent XSS — strip HTML tags on text fields
+- Validate file uploads: type, size, extension whitelist
+- Reject unknown properties: `whitelist: true, forbidNonWhitelisted: true` on `ValidationPipe`
+
+## API Security Headers
+
+- Use `helmet` middleware for standard security headers
+- Enable CORS with explicit origin whitelist — never `origin: '*'` in production
+- Rate limiting on auth endpoints (login, password reset) — `@nestjs/throttler`
+- CSRF protection on any cookie-based session endpoints
+
+## Data Protection
+
+- Sensitive fields (`password`, `tokens`) excluded from all response DTOs using `@Exclude()`
+- Database queries must use parameterized queries — never string concatenation
+- Audit trail: log who performed what action and when for evaluation state changes
+- Environment secrets in `.env` files — `.env` must be in `.gitignore`
+
+## Error Handling Security
+
+- Never expose stack traces, internal paths, or DB schema in error responses
+- Production error responses: generic message + error code only
+- Log full error details server-side with structured logging (correlation IDs)

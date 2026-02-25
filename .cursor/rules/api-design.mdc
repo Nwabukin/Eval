@@ -1,0 +1,74 @@
+---
+description: API response structure, error handling, HTTP conventions, pagination, and versioning
+globs: "backend/**/*.ts"
+alwaysApply: false
+---
+
+# API Design Standards
+
+## Response Envelope
+
+All API responses follow a consistent envelope:
+
+```typescript
+// Success
+{
+  "success": true,
+  "data": { ... },
+  "message": "Evaluation submitted successfully",
+  "meta": {                    // optional, present on paginated responses
+    "page": 1,
+    "limit": 20,
+    "total": 142,
+    "totalPages": 8
+  }
+}
+
+// Error
+{
+  "success": false,
+  "error": {
+    "code": "EVALUATION_ALREADY_SUBMITTED",
+    "message": "Self-evaluation has already been submitted for this cycle",
+    "details": []              // field-level validation errors when applicable
+  }
+}
+```
+
+## HTTP Methods & Status Codes
+
+| Action   | Method   | Success Code | Notes                      |
+|----------|----------|-------------|----------------------------|
+| List     | GET      | 200         | Always paginated            |
+| Detail   | GET      | 200         |                            |
+| Create   | POST     | 201         | Return created resource     |
+| Update   | PATCH    | 200         | Partial update preferred    |
+| Replace  | PUT      | 200         | Full replacement            |
+| Delete   | DELETE   | 204         | No body                    |
+
+## Error Codes
+
+- `400` — validation failure (include field-level `details`)
+- `401` — missing or invalid authentication
+- `403` — authenticated but insufficient role/permission
+- `404` — resource not found
+- `409` — conflict (duplicate, already submitted)
+- `500` — unhandled server error (log full trace, return generic message)
+
+## Pagination
+
+All list endpoints accept: `?page=1&limit=20&sort=createdAt&order=desc`
+Default: page 1, limit 20, max limit 100.
+
+## Naming Conventions
+
+- RESTful resource nouns: `/api/v1/evaluations`, `/api/v1/users`
+- Nested resources for ownership: `/api/v1/users/:userId/evaluations`
+- Actions as sub-resources when REST doesn't fit: `POST /api/v1/evaluations/:id/submit`
+- All routes prefixed with `/api/v1/`
+
+## Swagger / OpenAPI
+
+- Every endpoint must have `@ApiOperation`, `@ApiResponse` (success + error), `@ApiParam`/`@ApiQuery`
+- DTOs decorated with `@ApiProperty` on every field including `description`, `example`, and `required`
+- Swagger UI served at `/api/docs` in non-production environments

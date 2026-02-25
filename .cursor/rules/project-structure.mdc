@@ -1,0 +1,61 @@
+---
+description: Enforces monorepo directory structure, file naming, and modular organization for the Performance Evaluation System
+alwaysApply: true
+---
+
+# Project Structure & Organization
+
+## Monorepo Layout
+
+```
+eval/
+├── backend/                # NestJS serverless API
+│   ├── src/
+│   │   ├── modules/        # Feature modules (one per domain)
+│   │   │   └── <feature>/
+│   │   │       ├── dto/
+│   │   │       ├── entities/
+│   │   │       ├── guards/
+│   │   │       ├── <feature>.controller.ts
+│   │   │       ├── <feature>.service.ts
+│   │   │       ├── <feature>.module.ts
+│   │   │       └── <feature>.spec.ts
+│   │   ├── common/         # Shared filters, interceptors, decorators, pipes
+│   │   ├── config/         # Environment & app configuration
+│   │   ├── database/       # DB connection, migrations, seeds
+│   │   └── main.ts
+│   ├── test/               # E2E tests
+│   └── tsconfig.json
+├── frontend/               # Next.js application
+│   ├── src/
+│   │   ├── app/            # App Router pages & layouts
+│   │   ├── components/     # Reusable UI components (atomic design)
+│   │   │   ├── ui/         # Primitives (Button, Input, Modal)
+│   │   │   └── domain/     # Business components (EvalForm, ScoreCard)
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── lib/            # API client, utilities, helpers
+│   │   ├── services/       # API service functions (one per backend module)
+│   │   ├── types/          # Shared TypeScript types & interfaces
+│   │   └── styles/         # Global styles, theme tokens
+│   └── tsconfig.json
+├── shared/                 # Shared types, enums, constants between FE & BE
+│   └── types/
+└── package.json            # Root workspace config
+```
+
+## Naming Conventions
+
+- **Files**: `kebab-case` — `evaluation-cycle.service.ts`, `create-user.dto.ts`
+- **Classes**: `PascalCase` — `EvaluationCycleService`, `CreateUserDto`
+- **Interfaces/Types**: `PascalCase` prefixed with purpose — `IEvaluationCycle`, `CreateUserPayload`
+- **Enums**: `PascalCase` with `UPPER_SNAKE` members — `EvaluationStatus.SUBMITTED_TO_MANAGER`
+- **Constants**: `UPPER_SNAKE_CASE` — `MAX_SCORE`, `DEFAULT_PAGE_SIZE`
+- **Test files**: co-located as `<name>.spec.ts` (unit) or in `test/` (e2e)
+
+## Module Rules
+
+- One domain feature per module directory — never mix evaluation logic with user management
+- Every module must export through a barrel `index.ts` only when consumed externally
+- Shared utilities go in `common/` (backend) or `lib/` (frontend) — never in a feature module
+- Circular dependencies between modules are forbidden — extract shared logic into `common/` or `shared/`
+- Keep files under 300 lines; extract when exceeding this

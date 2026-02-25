@@ -1,0 +1,15 @@
+import * as Prisma from './internal/prismaNamespaceBrowser.js';
+export { Prisma };
+export * as $Enums from './enums.js';
+export * from './enums.js';
+export type Department = Prisma.DepartmentModel;
+export type Level = Prisma.LevelModel;
+export type User = Prisma.UserModel;
+export type EvaluationCycle = Prisma.EvaluationCycleModel;
+export type CycleCalibrationMember = Prisma.CycleCalibrationMemberModel;
+export type EvaluationSheet = Prisma.EvaluationSheetModel;
+export type EvaluationQuestion = Prisma.EvaluationQuestionModel;
+export type Evaluation = Prisma.EvaluationModel;
+export type EvaluationAnswer = Prisma.EvaluationAnswerModel;
+export type RevokedToken = Prisma.RevokedTokenModel;
+export type CalibrationIndividualScore = Prisma.CalibrationIndividualScoreModel;
