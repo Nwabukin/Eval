@@ -91,12 +91,21 @@ export function EvaluationSheetView({
               key={q.questionId}
               className={`p-0 lg:p-6 grid grid-cols-1 ${gridCols} gap-0 lg:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-border/40`}
             >
-              {/* KPI / Question Text */}
+              {/* Objective + KPIs */}
               <div className={`${kpiCols} p-4 lg:p-0 space-y-2`}>
-                <label className="section-label text-muted-foreground block">Success Criteria</label>
-                <p className="text-sm text-foreground">{q.questionText}</p>
-                {q.category && (
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-tighter">{q.category}</p>
+                <label className="section-label text-muted-foreground block">
+                  {q.category || "Success Criteria"}
+                </label>
+                {q.questionText && (
+                  <ul className="list-disc list-inside space-y-1 text-sm text-foreground">
+                    {q.questionText
+                      .split(/\r?\n/)
+                      .map((line) => line.trim())
+                      .filter((line) => line.length > 0)
+                      .map((line, idx) => (
+                        <li key={idx}>{line.replace(/^•\s*/, "")}</li>
+                      ))}
+                  </ul>
                 )}
                 <p className="text-[10px] text-muted-foreground">Weight: {q.weight}</p>
               </div>

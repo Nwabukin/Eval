@@ -1,7 +1,15 @@
 import { PrismaClient, UserRole } from "../generated/prisma/client.js";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcrypt";
 
-const prisma = new (PrismaClient as unknown as new () => InstanceType<typeof PrismaClient>)();
+const connectionString = process.env["DATABASE_URL"];
+if (!connectionString) {
+  throw new Error("DATABASE_URL environment variable is not set");
+}
+
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString }),
+});
 
 const BCRYPT_ROUNDS = 12;
 const DEFAULT_PASSWORD = "Password@123";
@@ -24,34 +32,86 @@ const GENERAL_SHEET: SheetDef = {
   maxScore: 10,
   sortOrder: 0,
   questions: [
-    { text: "I4nnova core values: Innovation, Impact, Integrity, Ingenuity", category: "I4 TENETS", weight: 10, sortOrder: 0 },
-    { text: "Work well with team members", category: "TEAMWORK", weight: 10, sortOrder: 1 },
-    { text: "Work well with members of other teams", category: "TEAMWORK", weight: 10, sortOrder: 2 },
-    { text: "Productive contributions to team efforts", category: "TEAMWORK", weight: 10, sortOrder: 3 },
-    { text: "Reliability in teams", category: "TEAMWORK", weight: 10, sortOrder: 4 },
-    { text: "Leadership: Relationship building, Agility and adaptability, creativity, Decision-making, Conflict management, Negotiation, Critical Thinking, Ability to take initiative", category: "DESIRED SOFT SKILLS", weight: 10, sortOrder: 5 },
-    { text: "Interpersonal Skills: verbal and nonverbal communication, the ability to handle conflict, teamwork, empathy, listening, and a positive attitude", category: "DESIRED SOFT SKILLS", weight: 10, sortOrder: 6 },
-    { text: "Communication skills: verbal and written communication with clients, supervisors and team members", category: "DESIRED SOFT SKILLS", weight: 10, sortOrder: 7 },
-    { text: "Client engagement, relationship, support", category: "DESIRED BUSINESS CONSULTING SKILLS", weight: 20, sortOrder: 8 },
-    { text: "Business Process, Support, Client session documentation", category: "DESIRED BUSINESS CONSULTING SKILLS", weight: 20, sortOrder: 9 },
-    { text: "Timely delivery of tasks with minimal to no supervision", category: "DESIRED BUSINESS CONSULTING SKILLS", weight: 20, sortOrder: 10 },
-    { text: "Proactive in task delivery and problem solving", category: "DESIRED BUSINESS CONSULTING SKILLS", weight: 20, sortOrder: 11 },
-    { text: "Improved knowledge of business processes", category: "DESIRED BUSINESS CONSULTING SKILLS", weight: 20, sortOrder: 12 },
-    { text: "Issue resolution research and troubleshooting", category: "DESIRED BUSINESS CONSULTING SKILLS", weight: 20, sortOrder: 13 },
-    { text: "MS PowerPoint", category: "DESIRED TECH / APPLICATION SKILLS", weight: 10, sortOrder: 14 },
-    { text: "MS Sharepoint", category: "DESIRED TECH / APPLICATION SKILLS", weight: 10, sortOrder: 15 },
-    { text: "MS Outlook", category: "DESIRED TECH / APPLICATION SKILLS", weight: 10, sortOrder: 16 },
-    { text: "MS Teams", category: "DESIRED TECH / APPLICATION SKILLS", weight: 10, sortOrder: 17 },
-    { text: "MS Excel", category: "DESIRED TECH / APPLICATION SKILLS", weight: 10, sortOrder: 18 },
-    { text: "Initiate and/or contribute to team bonding ideas and activities", category: "I4 SOCIAL ENGAGEMENTS", weight: 10, sortOrder: 19 },
-    { text: "Punctuality: Coming in to work on or before resumption time; Logging in to virtual calls on time", category: "ATTITUDE TO WORK", weight: 10, sortOrder: 20 },
-    { text: "Attendance: High/Consistent Attendance, Logging in to virtual calls on time", category: "ATTITUDE TO WORK", weight: 10, sortOrder: 21 },
-    { text: "Personal Growth: Proven personal effort to upskill", category: "ATTITUDE TO WORK", weight: 10, sortOrder: 22 },
-    { text: "Open SAP: Record of Achievement: Your HR Journey to the cloud", category: "CERTIFICATIONS", weight: 20, sortOrder: 23 },
-    { text: "SuccessFactors: Employee Central", category: "CERTIFICATIONS", weight: 20, sortOrder: 24 },
-    { text: "SuccessFactors: PMGM", category: "CERTIFICATIONS", weight: 20, sortOrder: 25 },
-    { text: "SuccessFactors: Compensation", category: "CERTIFICATIONS", weight: 20, sortOrder: 26 },
-    { text: "SuccessFactors: LMS", category: "CERTIFICATIONS", weight: 20, sortOrder: 27 },
+    {
+      text: "I4nnova core values: Innovation, Impact, Integrity, Ingenuity",
+      category: "I4 TENETS",
+      weight: 10,
+      sortOrder: 0,
+    },
+    {
+      text: [
+        "• Work well with team members",
+        "• Work well with members of other teams",
+        "• Productive contributions to team efforts",
+        "• Reliability in teams",
+      ].join("\n"),
+      category: "TEAMWORK",
+      weight: 10,
+      sortOrder: 1,
+    },
+    {
+      text: [
+        "• Leadership: Relationship building, Agility and adaptability, creativity, Decision-making, Conflict management, Negotiation, Critical Thinking, Ability to take initiative",
+        "• Interpersonal Skills: verbal and nonverbal communication, the ability to handle conflict, teamwork, empathy, listening, and a positive attitude",
+        "• Communication skills: verbal and written communication with clients, supervisors and team members",
+      ].join("\n"),
+      category: "DESIRED SOFT SKILLS",
+      weight: 10,
+      sortOrder: 2,
+    },
+    {
+      text: [
+        "• Client engagement, relationship, support",
+        "• Business Process, Support, Client session documentation",
+        "• Timely delivery of tasks with minimal to no supervision",
+        "• Proactive in task delivery and problem solving",
+        "• Improved knowledge of business processes",
+        "• Issue resolution research and troubleshooting",
+      ].join("\n"),
+      category: "DESIRED BUSINESS CONSULTING SKILLS",
+      weight: 20,
+      sortOrder: 3,
+    },
+    {
+      text: [
+        "• MS PowerPoint",
+        "• MS Sharepoint",
+        "• MS Outlook",
+        "• MS Teams",
+        "• MS Excel",
+      ].join("\n"),
+      category: "DESIRED TECH / APPLICATION SKILLS",
+      weight: 10,
+      sortOrder: 4,
+    },
+    {
+      text: "• Initiate and/or contribute to team bonding ideas and activities",
+      category: "I4 SOCIAL ENGAGEMENTS",
+      weight: 10,
+      sortOrder: 5,
+    },
+    {
+      text: [
+        "• Punctuality: Coming in to work on or before resumption time; Logging in to virtual calls on time",
+        "• Attendance: High/Consistent Attendance, Logging in to virtual calls on time",
+        "• Personal Growth: Proven personal effort to upskill",
+      ].join("\n"),
+      category: "ATTITUDE TO WORK",
+      weight: 10,
+      sortOrder: 6,
+    },
+    {
+      text: [
+        "• Open SAP: Record of Achievement: Your HR Journey to the cloud",
+        "• SuccessFactors: Employee Central",
+        "• SuccessFactors: PMGM",
+        "• SuccessFactors: Compensation",
+        "• SuccessFactors: LMS",
+      ].join("\n"),
+      category: "CERTIFICATIONS",
+      weight: 20,
+      sortOrder: 7,
+    },
   ],
 };
 
@@ -62,22 +122,57 @@ const SUCCESS_FACTORS_SHEET: SheetDef = {
   maxScore: 10,
   sortOrder: 1,
   questions: [
-    { text: "Mastery of business process: EC, Compensation, PMGM", category: "SUCCESS FACTORS", weight: 15, sortOrder: 0 },
-    { text: "Solution Demo", category: "SUCCESS FACTORS", weight: 15, sortOrder: 1 },
-    { text: "Solution Configuration: Modules, Administration", category: "SUCCESS FACTORS", weight: 15, sortOrder: 2 },
-    { text: "Ability to facilitate requirement gathering session with client", category: "REQUIREMENT GATHERING", weight: 10, sortOrder: 3 },
-    { text: "Fit to standard: Ability to interpret how SuccessFactors executes client process", category: "REQUIREMENT GATHERING", weight: 10, sortOrder: 4 },
-    { text: "Effective documentation of requirements", category: "REQUIREMENT GATHERING", weight: 10, sortOrder: 5 },
-    { text: "Support senior/external consultants on requirement gathering activities", category: "REQUIREMENT GATHERING", weight: 10, sortOrder: 6 },
-    { text: "Effective workbook utilization", category: "REQUIREMENT GATHERING", weight: 10, sortOrder: 7 },
-    { text: "Generation of test scripts", category: "UAT", weight: 20, sortOrder: 8 },
-    { text: "UAT delivery to clients: Onboarding/Offboarding", category: "UAT", weight: 20, sortOrder: 9 },
-    { text: "Ability to handle client engagement in UAT session", category: "UAT", weight: 20, sortOrder: 10 },
-    { text: "Generation of training manuals", category: "TRAINING", weight: 20, sortOrder: 11 },
-    { text: "Delivery of training session: Onboarding/Offboarding", category: "TRAINING", weight: 20, sortOrder: 12 },
-    { text: "Ability to handle client engagement in Training session", category: "TRAINING", weight: 20, sortOrder: 13 },
-    { text: "Facilitate data template sessions with clients", category: "DATA MANAGEMENT", weight: 5, sortOrder: 14 },
-    { text: "Data cleaning, validation and upload to SF systems", category: "DATA MANAGEMENT", weight: 5, sortOrder: 15 },
+    {
+      text: [
+        "• Mastery of business process: EC, Compensation, PMGM",
+        "• Solution Demo",
+        "• Solution Configuration: Modules, Administration",
+      ].join("\n"),
+      category: "SUCCESS FACTORS",
+      weight: 15,
+      sortOrder: 0,
+    },
+    {
+      text: [
+        "• Ability to facilitate requirement gathering session with client",
+        "• Fit to standard: Ability to interpret how SuccessFactors executes client process",
+        "• Effective documentation of requirements",
+        "• Support senior/external consultants on requirement gathering activities",
+        "• Effective workbook utilization",
+      ].join("\n"),
+      category: "REQUIREMENT GATHERING",
+      weight: 10,
+      sortOrder: 1,
+    },
+    {
+      text: [
+        "• Generation of test scripts",
+        "• UAT delivery to clients: Onboarding/Offboarding",
+        "• Ability to handle client engagement in UAT session",
+      ].join("\n"),
+      category: "UAT",
+      weight: 20,
+      sortOrder: 2,
+    },
+    {
+      text: [
+        "• Generation of training manuals",
+        "• Delivery of training session: Onboarding/Offboarding",
+        "• Ability to handle client engagement in Training session",
+      ].join("\n"),
+      category: "TRAINING",
+      weight: 20,
+      sortOrder: 3,
+    },
+    {
+      text: [
+        "• Facilitate data template sessions with clients",
+        "• Data cleaning, validation and upload to SF systems",
+      ].join("\n"),
+      category: "DATA MANAGEMENT",
+      weight: 5,
+      sortOrder: 4,
+    },
   ],
 };
 
@@ -88,9 +183,21 @@ const PAYROLL_SHEET: SheetDef = {
   maxScore: 10,
   sortOrder: 2,
   questions: [
-    { text: "Ability to facilitate requirement gathering session with client", category: "REQUIREMENT GATHERING", weight: 15, sortOrder: 0 },
-    { text: "Effective documentation of requirements", category: "REQUIREMENT GATHERING", weight: 15, sortOrder: 1 },
-    { text: "Effective contribution to I4 smart development", category: "I4 SMART SOLUTION DEVELOPMENT", weight: 15, sortOrder: 2 },
+    {
+      text: [
+        "• Ability to facilitate requirement gathering session with client",
+        "• Effective documentation of requirements",
+      ].join("\n"),
+      category: "REQUIREMENT GATHERING",
+      weight: 15,
+      sortOrder: 0,
+    },
+    {
+      text: "• Effective contribution to I4 smart development",
+      category: "I4 SMART SOLUTION DEVELOPMENT",
+      weight: 15,
+      sortOrder: 1,
+    },
   ],
 };
 
@@ -231,7 +338,7 @@ async function main() {
   );
   console.log(`Upserted ${employees.length} employees`);
 
-  // ─── Evaluation Cycle ───────────────────────────────────
+  // ─── Evaluation Cycles ──────────────────────────────────
   const cycleName = "Q1 2026 Performance Review";
   let cycle = await prisma.evaluationCycle.findFirst({ where: { name: cycleName } });
   if (!cycle) {
@@ -248,20 +355,37 @@ async function main() {
     console.log(`Cycle already exists: ${cycle.name} (${cycle.id})`);
   }
 
-  // ─── Evaluation Sheets & Questions ─────────────────────
+  const systemTestName = "system-test";
+  let systemTestCycle = await prisma.evaluationCycle.findFirst({ where: { name: systemTestName } });
+  if (!systemTestCycle) {
+    systemTestCycle = await prisma.evaluationCycle.create({
+      data: {
+        name: systemTestName,
+        startDate: new Date("2026-04-01"),
+        endDate: new Date("2026-06-30"),
+        calibrationMembers: { create: [{ userId: calibrator.id }] },
+      },
+    });
+    console.log(`Created cycle: ${systemTestCycle.name} (${systemTestCycle.id})`);
+  } else {
+    console.log(`Cycle already exists: ${systemTestCycle.name} (${systemTestCycle.id})`);
+  }
+
+  // Shared sheet templates for all cycles (derived from Excel evaluation template).
+  const sheetTemplates: { deptIdx: number; lvlIdx: number; sheets: SheetDef[] }[] = [
+    { deptIdx: 0, lvlIdx: 0, sheets: [GENERAL_SHEET, SUCCESS_FACTORS_SHEET] },
+    { deptIdx: 0, lvlIdx: 1, sheets: [GENERAL_SHEET, SUCCESS_FACTORS_SHEET] },
+    { deptIdx: 0, lvlIdx: 2, sheets: [GENERAL_SHEET, SUCCESS_FACTORS_SHEET] },
+    { deptIdx: 2, lvlIdx: 1, sheets: [GENERAL_SHEET, PAYROLL_SHEET] },
+    { deptIdx: 3, lvlIdx: 0, sheets: [GENERAL_SHEET] },
+  ];
+
+  // ─── Evaluation Sheets & Questions: Q1 2026 ─────────────
   // Create sheets for each department + level combo that has employees.
   // GENERAL applies to all; SUCCESS FACTORS to Engineering; PAYROLL to Finance.
   const existingSheets = await prisma.evaluationSheet.count({ where: { cycleId: cycle.id } });
 
   if (existingSheets === 0) {
-    const sheetTemplates: { deptIdx: number; lvlIdx: number; sheets: SheetDef[] }[] = [
-      { deptIdx: 0, lvlIdx: 0, sheets: [GENERAL_SHEET, SUCCESS_FACTORS_SHEET] },
-      { deptIdx: 0, lvlIdx: 1, sheets: [GENERAL_SHEET, SUCCESS_FACTORS_SHEET] },
-      { deptIdx: 0, lvlIdx: 2, sheets: [GENERAL_SHEET, SUCCESS_FACTORS_SHEET] },
-      { deptIdx: 2, lvlIdx: 1, sheets: [GENERAL_SHEET, PAYROLL_SHEET] },
-      { deptIdx: 3, lvlIdx: 0, sheets: [GENERAL_SHEET] },
-    ];
-
     let totalSheets = 0;
     let totalQuestions = 0;
 
@@ -279,6 +403,33 @@ async function main() {
     console.log(`Created ${totalSheets} evaluation sheets with ${totalQuestions} total questions`);
   } else {
     console.log(`Sheets already exist for cycle (${existingSheets} found)`);
+  }
+
+  // ─── Evaluation Sheets & Questions: system-test ─────────
+  const existingSystemTestSheets = await prisma.evaluationSheet.count({
+    where: { cycleId: systemTestCycle.id },
+  });
+
+  if (existingSystemTestSheets === 0) {
+    let totalSheets = 0;
+    let totalQuestions = 0;
+
+    for (const tmpl of sheetTemplates) {
+      const dept = departments[tmpl.deptIdx]!;
+      const level = levels[tmpl.lvlIdx]!;
+
+      for (const sheetDef of tmpl.sheets) {
+        const sheet = await createSheetWithQuestions(systemTestCycle.id, dept.id, level.id, sheetDef);
+        totalSheets++;
+        totalQuestions += sheet.questions.length;
+      }
+    }
+
+    console.log(
+      `Created ${totalSheets} evaluation sheets with ${totalQuestions} total questions for system-test`,
+    );
+  } else {
+    console.log(`Sheets already exist for system-test cycle (${existingSystemTestSheets} found)`);
   }
 
   console.log("\nSeed complete. Demo credentials:");
