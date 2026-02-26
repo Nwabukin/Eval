@@ -1,3 +1,7 @@
+declare const jest: {
+  fn: () => (...args: unknown[]) => unknown;
+};
+
 /**
  * Mock of the generated Prisma client for unit tests.
  * Re-exports enums and provides a stub PrismaClient class
