@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { ValidationPipe } from "@nestjs/common";
+import { RequestMethod, ValidationPipe } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { AppModule } from "./app.module.js";
@@ -18,7 +18,12 @@ async function bootstrap(): Promise<void> {
 
   // Global prefix
   const apiPrefix = process.env["API_PREFIX"] ?? "api/v1";
-  app.setGlobalPrefix(apiPrefix);
+  app.setGlobalPrefix(apiPrefix, {
+    exclude: [
+      { path: "", method: RequestMethod.GET },
+      { path: "health", method: RequestMethod.GET },
+    ],
+  });
 
   // Global validation pipe — enforces class-validator on all incoming DTOs
   app.useGlobalPipes(

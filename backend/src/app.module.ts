@@ -16,6 +16,7 @@ import { EvaluationQuestionsModule } from "./modules/evaluation-questions/evalua
 import { EvaluationsModule } from "./modules/evaluations/evaluations.module.js";
 import { NotificationsModule } from "./modules/notifications/notifications.module.js";
 import { ReportsModule } from "./modules/reports/reports.module.js";
+import { HealthController } from "./health.controller.js";
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ReportsModule } from "./modules/reports/reports.module.js";
     NotificationsModule,
     ReportsModule,
   ],
+  controllers: [HealthController],
   providers: [
     { provide: APP_FILTER, useClass: HttpExceptionFilter },
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
