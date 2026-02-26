@@ -23,7 +23,7 @@ export declare const CalibrationMode: {
 };
 export type CalibrationMode = (typeof CalibrationMode)[keyof typeof CalibrationMode];
 export declare class PrismaClient {
-    $connect: jest.Mock<any, any, any>;
-    $disconnect: jest.Mock<any, any, any>;
-    $transaction: jest.Mock<any, any, any>;
+    $connect: (...args: unknown[]) => unknown;
+    $disconnect: (...args: unknown[]) => unknown;
+    $transaction: (...args: unknown[]) => unknown;
 }
